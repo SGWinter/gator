@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/SGWinter/internal/config"
+	"github.com/SGWinter/gator/internal/config"
 )
 
 func main() {
