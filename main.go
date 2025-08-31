@@ -7,9 +7,14 @@ import (
 )
 
 func main() {
-	testFile, err := config.Read()
+	file, err := config.Read()
 	if err != nil {
 		fmt.Printf("%v\n", err)
 	}
-	fmt.Printf("%v\n", testFile.URL)
+	file.SetUser("sean")
+	file, err = config.Read()
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+	fmt.Printf("%v, %v\n", file.URL, file.USER)
 }
