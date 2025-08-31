@@ -7,6 +7,9 @@ import (
 )
 
 func main() {
-	testFile := config.Read()
-	fmt.Printf("%v", testFile)
+	testFile, err := config.Read()
+	if err != nil {
+		fmt.Printf("%v\n", err)
+	}
+	fmt.Printf("%v\n", testFile.URL)
 }
