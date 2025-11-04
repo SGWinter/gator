@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"database/sql"
 
 	_ "github.com/lib/pq"
 
@@ -11,8 +12,8 @@ import (
 )
 
 type state struct {
-	cfg *config.Config
 	db  *database.Queries
+	cfg *config.Config
 }
 
 func main() {
@@ -21,14 +22,16 @@ func main() {
 		log.Fatalf("error reading config: %v", err)
 	}
 
-	db, err := sql.Open("postgres", dbURL)
+	db, err := sql.Open("postgres", cfg.DBURL)
 	if err != nil {
 		log.Fatalf("error openning db connection: %v", err)
 	}
+	defer db.Close()
+	dbQueries := database.New(db)
 
 	programState := &state{
+		db:  dbQueries,
 		cfg: &cfg,
-		db:  &db,
 	}
 
 	cmds := commands{
